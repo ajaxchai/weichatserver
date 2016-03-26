@@ -14,6 +14,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.control.meta.TextMessage;
+import com.control.util.Log;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -21,6 +22,8 @@ import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 
 public class CoreService {
+	
+	private static String logTag = "CoreService";
 	/**
 	 * 返回消息类型：文本
 	 */
@@ -105,8 +108,7 @@ public class CoreService {
 			textMessage.setFromUserName(toUserName);
 			textMessage.setCreateTime(new Date().getTime());
 			textMessage.setMsgType(RESP_MESSAGE_TYPE_TEXT);
-			textMessage.setFuncFlag(0);
-
+			
 			if (msgType.equals(REQ_MESSAGE_TYPE_TEXT)) {
 				String Content = requestMap.get("Content");
 				respContent = "你发的消息为：" + Content;
@@ -143,7 +145,7 @@ public class CoreService {
 					// 事件KEY值，与创建自定义菜单时指定的KEY值对应
 					String eventKey = requestMap.get("EventKey");
 					// 自定义菜单点击事件
-
+					Log.d(logTag, "eventKey:" + eventKey);
 				}
 
 				else if (eventType.equals(EVENT_TYPE_LOCATION)) {
@@ -159,6 +161,7 @@ public class CoreService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Log.d(logTag, respMessage);
 		return respMessage;
 	}
 

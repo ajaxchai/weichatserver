@@ -1,13 +1,13 @@
 package com.control.meta;
 
 public class TextMessage extends BaseMessage {
-	private String content;  
+	private String Content;  
 	  
     public String getContent() {  
-        return content;  
+        return Content;  
     }  
   
     public void setContent(String text) {  
-        content = text;  
+        Content = text;  
     }
 }

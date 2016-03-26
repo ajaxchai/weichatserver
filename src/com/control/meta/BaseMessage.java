@@ -1,58 +1,41 @@
 package com.control.meta;
 
 public class BaseMessage {
-	private String toUserName;
-	private String fromUserName;
-	private long createTime;
-	private String msgType;
-	private long msgId;
-	private int funcFlag;
+	private String ToUserName;
+	private String FromUserName;
+	private long CreateTime;
+	private String MsgType;
 
 	public String getToUserName() {
-		return toUserName;
+		return ToUserName;
 	}
 
 	public void setToUserName(String userName) {
-		toUserName = userName;
+		ToUserName = userName;
 	}
 
 	public String getFromUserName() {
-		return fromUserName;
+		return FromUserName;
 	}
 
 	public void setFromUserName(String userName) {
-		fromUserName = userName;
+		FromUserName = userName;
 	}
 
 	public long getCreateTime() {
-		return createTime;
+		return CreateTime;
 	}
 
 	public void setCreateTime(long time) {
-		createTime = time;
+		CreateTime = time;
 	}
 
 	public String getMsgType() {
-		return msgType;
+		return MsgType;
 	}
 
 	public void setMsgType(String type) {
-		msgType = type;
+		MsgType = type;
 	}
 
-	public long getMsgId() {
-		return msgId;
-	}
-
-	public void setMsgId(long id) {
-		msgId = id;
-	}
-
-	public int getFuncFlag() {
-		return funcFlag;
-	}
-
-	public void setFuncFlag(int flag) {
-		funcFlag = flag;
-	}
 }
