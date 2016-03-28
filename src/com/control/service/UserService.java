@@ -1,9 +1,9 @@
 package com.control.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.control.meta.WeixinUser;
-import com.control.util.AppTokenUtil;
 import com.control.util.HttpUtil;
 import com.control.util.Log;
 
@@ -22,6 +22,48 @@ public class UserService {
     	
     	Log.d(logTag,"errmsg="+jsonObject.get("errmsg"));
     	Log.d(logTag,"errcode="+jsonObject.get("errcode"));
+	}
+	
+	public static List<String> getWeixinUserList(String accessToken) {
+		List<String> userOpenIdList = new ArrayList<String>();
+		
+		//String requestURL = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID";
+		String requestURL = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN";
+		requestURL = requestURL.replace("ACCESS_TOKEN", accessToken);
+		
+		JSONObject jsonObject = HttpUtil.httpsRequest(requestURL, "GET", null);
+		Log.d(logTag, jsonObject.toString());
+		
+		if (null != jsonObject) {
+			try {
+				int totalUsers = jsonObject.getInt("total");
+				Log.d(logTag, "totalUsers: " + totalUsers);
+				
+				//TBD if totalUsers > 10000
+				
+				int returnedOpenIdCount = jsonObject.getInt("count");
+				Log.d(logTag, "returnedOpenIdCount: " + returnedOpenIdCount);
+				
+				JSONArray openIdData = JSONArray.fromObject(JSONObject.fromObject(jsonObject.get("data")).get("openid"));
+				Log.d(logTag, "openIdData: " + openIdData.toString());
+				
+				String lastOpenId = jsonObject.getString("next_openid");
+				Log.d(logTag, "lastOpenId: " + lastOpenId);
+				
+				for (int i = 0; i < openIdData.size(); i++) {
+					Log.d(logTag, "openID " + i + ": " + openIdData.getString(i));
+					userOpenIdList.add(i, openIdData.getString(i));
+		        }
+			
+			}catch (Exception e) {
+				userOpenIdList = null;
+				int errorCode = jsonObject.getInt("errcode");
+				String errorMsg = jsonObject.getString("errmsg");
+				Log.e(logTag, "getWeixinUserList error, errcode:" + errorCode + " errmsg:" + errorMsg);
+			}
+		}
+		
+		return userOpenIdList;
 	}
 	
 	public static WeixinUser getWeixinUserInfo(String accessToken, String openId) {

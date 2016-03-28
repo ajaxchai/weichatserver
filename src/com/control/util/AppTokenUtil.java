@@ -24,4 +24,8 @@ public class AppTokenUtil {
         return accessToken;  
     }  
 	
+	public static String getAccessToken() {
+		return getAccessToken("wx5ca5a605d0d6b7e1","9616e8c75f0ee4822862dba501398e89");
+	}
+	
 }
